@@ -81,13 +81,15 @@ class Player(Entity):
         self.vy = 0
         self.isRespawning = False
 
-    def update_dark_mode(self):
+    def update_color_mode(self, color):
         if Mutables.dark_mode:
             self.turtle.fillcolor('white')
             self.turtle.pencolor('black')
         else:
             self.turtle.fillcolor('black')
             self.turtle.pencolor('white')
+        if Mutables.rainbow_mode:
+            self.turtle.fillcolor(color)
 
     def update(self, entities, scorekeeper):
         if not self.isRespawning:

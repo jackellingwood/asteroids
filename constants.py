@@ -15,5 +15,7 @@ class Constants(Enum):
 
 class Mutables:
     dark_mode = True
+    rainbow_mode = False
+    color_hue = 0
     game_state = 'PLAYING'
     last_state = 'PLAYING'
