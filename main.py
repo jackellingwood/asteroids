@@ -159,8 +159,8 @@ def game_loop(s, entities, sk):
                 entities.extend(spawn_asteroids())
             s.listen()
             sleep(0.01)
-            update_entities(entities, sk)
             sk.update()
+            update_entities(entities, sk)
             s.update()
         else:
             s.listen()
@@ -173,7 +173,7 @@ def main():
         s = setup_screen()
         entities, sk, player = setup_entities()
         setup_controls(s, player)
-        # sk.score = 10000
+        # sk.score = 9999
         # sk.lives = 0
         try:
             game_loop(s, entities, sk)

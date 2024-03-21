@@ -7,6 +7,7 @@ from asteroid import Asteroid
 from bullet import Bullet
 from constants import Constants, Mutables
 from entity import Entity
+from sound import play_sound
 
 class Player(Entity):
     def __init__(self, x, y, vx, vy):
@@ -80,6 +81,7 @@ class Player(Entity):
         self.vx = 0
         self.vy = 0
         self.isRespawning = False
+        play_sound('respawn.wav')
 
     def update_dark_mode(self):
         if Mutables.dark_mode:
@@ -98,14 +100,18 @@ class Player(Entity):
             self.vy += Constants.THRUST.value * sin(radians(self.angle()))
         self.cap_speed()
         if self.toShoot:
-            self.shoot(entities)
-            self.toShoot = False
+            if not self.isRespawning:
+                self.shoot(entities)
+                self.toShoot = False
+                play_sound('shoot.wav')
         self.turtle.setx(self.x() + self.vx)
         self.turtle.sety(self.y() + self.vy)
         for e in entities:
             if isinstance(e, Asteroid) and e.is_in_radius(self.x(), self.y()):
                 e.split(entities, scorekeeper)
+                scorekeeper.update() # if lives increase after crashing, the player gets an extra life
                 if scorekeeper.lives > 0:
+                    play_sound('explosion.wav')
                     self.isRespawning = True
                     self.turtle.hideturtle()
                     self.turtle.setpos(1000, 1000)
@@ -114,6 +120,8 @@ class Player(Entity):
                         2000
                     )
                 else:
+                    play_sound('explosion.wav')
+                    play_sound('gameover.wav')
                     self.kill(entities)
                 scorekeeper.lives -= 1
                 return

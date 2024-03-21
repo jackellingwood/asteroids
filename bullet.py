@@ -2,6 +2,7 @@ from asteroid import Asteroid
 
 from constants import Constants, Mutables
 from entity import Entity
+from sound import play_sound
 
 class Bullet(Entity):
     def __init__(self, x, y, radius, speed, angle):
@@ -31,4 +32,5 @@ class Bullet(Entity):
             if isinstance(e, Asteroid) and e.is_in_radius(self.x(), self.y()):
                 e.split(entities, scorekeeper)
                 self.kill(entities)
+                play_sound('hit.wav')
                 return

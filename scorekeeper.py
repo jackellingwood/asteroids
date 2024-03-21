@@ -3,6 +3,7 @@ from pickle import dump, load
 from turtle import Turtle
 
 from constants import Constants, Mutables
+from sound import play_sound
 
 class Scorekeeper:
     def __init__(self):
@@ -36,6 +37,7 @@ class Scorekeeper:
                 newChar +
                 self.initials[self.initials_pointer + 1:]
         )
+        play_sound('hit.wav')
 
     def decrement_initial(self):
         newChar = ''
@@ -50,14 +52,17 @@ class Scorekeeper:
             newChar +
             self.initials[self.initials_pointer + 1:]
         )
+        play_sound('hit.wav')
 
     def increment_pointer(self):
         if self.initials_pointer < 2:
             self.initials_pointer += 1
+        play_sound('hit.wav')
 
     def decrement_pointer(self):
         if self.initials_pointer > 0:
             self.initials_pointer -= 1
+        play_sound('hit.wav')
 
     def enter_initials(self):
         if Mutables.game_state == 'ENTERING_INITIALS':
@@ -65,6 +70,7 @@ class Scorekeeper:
             with open('leaderboard.pkl', 'wb') as f:
                 dump(self.leaderboard, f)
             Mutables.game_state = 'GAME_OVER'
+            play_sound('extralife.wav')
 
     def draw_leaderboard(self):
         self.turtle.setpos(-70, -25)
@@ -108,6 +114,7 @@ class Scorekeeper:
         if self.score >= self.nextTenK * 10000:
             self.lives += 1
             self.nextTenK += 1
+            play_sound('extralife.wav')
 
         self.turtle.write(self.score, False, font=('Courier New', 30, 'normal'))
         self.turtle.setpos(-Constants.BOUND.value + 8, Constants.BOUND.value - 40)
