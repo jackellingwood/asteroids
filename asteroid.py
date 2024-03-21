@@ -24,13 +24,15 @@ class Asteroid(Entity):
             entities.append(a)
         self.kill(entities)
 
-    def update_dark_mode(self):
+    def update_color_mode(self, color):
         if Mutables.dark_mode:
             self.turtle.fillcolor('black')
             self.turtle.pencolor('white')
         else:
             self.turtle.fillcolor('white')
             self.turtle.pencolor('black')
+        if Mutables.rainbow_mode:
+            self.turtle.pencolor(color)
 
     def update(self, entities, scorekeeper):
         self.wrap()

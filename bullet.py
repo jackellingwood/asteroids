@@ -19,11 +19,15 @@ class Bullet(Entity):
         elif self.y() < -Constants.BOUND.value:
             self.kill(entities)
 
-    def update_dark_mode(self):
-        if Mutables.dark_mode:
+    def update_color_mode(self, color):
+        if Mutables.rainbow_mode:
+            self.turtle.color(color)
+        elif Mutables.dark_mode:
             self.turtle.color('white')
         else:
             self.turtle.color('black')
+
+
 
     def update(self, entities, scorekeeper):
         self.anti_wrap(entities)

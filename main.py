@@ -3,6 +3,7 @@ from constants import Constants, Mutables
 from player import Player
 from scorekeeper import Scorekeeper
 
+from colorsys import hsv_to_rgb
 from math import sin, cos, radians
 from random import randint
 from turtle import Screen, Turtle, TurtleGraphicsError, Terminator
@@ -11,7 +12,7 @@ from tkinter import TclError
 
 def setup_screen():
     s = Screen()
-    s.title('Pysteroids Alpha v0.2')
+    s.title('Pysteroids Alpha v0.3')
     s.setup(Constants.BOUND.value * 2, Constants.BOUND.value * 2)
     s.tracer(0, 0)
     return s
@@ -104,9 +105,8 @@ def setup_controls(s, player):
 
     s.onkey(restart, 'r')
 
-    print()
-
     s.onkey(toggle_dark, 't')
+    s.onkey(toggle_rainbow, 'g')
 
 def setup_initials(s, scorekeeper):
     clear_keys(s)
@@ -136,22 +136,29 @@ def restart():
 def toggle_dark():
     Mutables.dark_mode = not Mutables.dark_mode
 
+def toggle_rainbow():
+    Mutables.rainbow_mode = not Mutables.rainbow_mode
+
 def update_entities(entities, sk):
     for entity in entities:
         entity.update(entities, sk)
 
-def update_dark_mode(s, entities, scorekeeper):
+def update_color_mode(s, entities, scorekeeper):
+    if Mutables.color_hue > 1:
+        Mutables.color_hue = 0
+    color = hsv_to_rgb(Mutables.color_hue, 1, 1)
+    Mutables.color_hue += 0.01
     if Mutables.dark_mode:
         s.bgcolor('black')
     else:
         s.bgcolor('white')
     for entity in entities:
-        entity.update_dark_mode()
-    scorekeeper.update_dark_mode()
+        entity.update_color_mode(color)
+    scorekeeper.update_color_mode(color)
 
 def game_loop(s, entities, sk):
     while Mutables.game_state != 'RESTARTING':
-        update_dark_mode(s, entities, sk)
+        update_color_mode(s, entities, sk)
         if not Mutables.game_state == 'PAUSED':
             if sk.lives < 0:
                 setup_initials(s, sk)
