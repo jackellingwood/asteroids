@@ -25,8 +25,10 @@ def setup_entities():
     return entities, sk, player
 
 def spawn_asteroids():
+    Mutables.round += 1
     asters = []
-    for _ in range(5):
+    astersPerSide = (Mutables.round * 2 + 10) // 2
+    for _ in range(astersPerSide):
         if randint(0, 1) == 0:
             asters.append(
                 Asteroid(
@@ -47,7 +49,7 @@ def spawn_asteroids():
                     randint(0, 360)
                 )
             )
-    for _ in range(5):
+    for _ in range(astersPerSide):
         if randint(0, 1) == 0:
             asters.append(
                 Asteroid(

@@ -19,3 +19,4 @@ class Mutables:
     color_hue = 0
     game_state = 'PLAYING'
     last_state = 'PLAYING'
+    round = 0
