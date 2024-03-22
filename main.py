@@ -2,6 +2,7 @@ from asteroid import Asteroid
 from constants import Constants, Mutables
 from player import Player
 from scorekeeper import Scorekeeper
+from sound import play_sound
 
 from colorsys import hsv_to_rgb
 from math import sin, cos, radians
@@ -157,6 +158,7 @@ def update_color_mode(s, entities, scorekeeper):
     scorekeeper.update_color_mode(color)
 
 def game_loop(s, entities, sk):
+    play_sound('respawn.wav')
     while Mutables.game_state != 'RESTARTING':
         update_color_mode(s, entities, sk)
         if not Mutables.game_state == 'PAUSED':
