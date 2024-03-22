@@ -101,9 +101,9 @@ class Scorekeeper:
         self.leaderboard = list(reversed(self.leaderboard))
         self.leaderboard.pop()
 
-    def update_color_mode(self, color):
+    def update_color_mode(self):
         if Mutables.rainbow_mode:
-            self.turtle.color(color)
+            self.turtle.color(Mutables.color)
         elif Mutables.dark_mode:
             self.turtle.color('white')
         else:

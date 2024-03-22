@@ -1,3 +1,4 @@
+from colorsys import hsv_to_rgb
 from enum import Enum
 
 class Constants(Enum):
@@ -17,6 +18,7 @@ class Mutables:
     dark_mode = True
     rainbow_mode = False
     color_hue = 0
+    color = hsv_to_rgb(color_hue, 1, 1)
     game_state = 'PLAYING'
     last_state = 'PLAYING'
     round = 0

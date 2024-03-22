@@ -149,15 +149,15 @@ def update_entities(entities, sk):
 def update_color_mode(s, entities, scorekeeper):
     if Mutables.color_hue > 1:
         Mutables.color_hue = 0
-    color = hsv_to_rgb(Mutables.color_hue, 1, 1)
+
     Mutables.color_hue += 0.01
     if Mutables.dark_mode:
         s.bgcolor('black')
     else:
         s.bgcolor('white')
     for entity in entities:
-        entity.update_color_mode(color)
-    scorekeeper.update_color_mode(color)
+        entity.update_color_mode()
+    scorekeeper.update_color_mode()
 
 def game_loop(s, entities, sk):
     play_sound('respawn.wav')
@@ -168,15 +168,11 @@ def game_loop(s, entities, sk):
                 setup_initials(s, sk)
             if not any(isinstance(e, Asteroid) for e in entities):
                 entities.extend(spawn_asteroids())
-            s.listen()
-            sleep(0.01)
             sk.update()
             update_entities(entities, sk)
-            s.update()
-        else:
-            s.listen()
-            sleep(0.01)
-            s.update()
+        s.listen()
+        sleep(0.01)
+        s.update()
 
 def main():
     while True:

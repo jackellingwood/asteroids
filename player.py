@@ -83,7 +83,7 @@ class Player(Entity):
         self.isRespawning = False
         play_sound('respawn.wav')
 
-    def update_color_mode(self, color):
+    def update_color_mode(self):
         if Mutables.dark_mode:
             self.turtle.fillcolor('white')
             self.turtle.pencolor('black')
@@ -91,7 +91,7 @@ class Player(Entity):
             self.turtle.fillcolor('black')
             self.turtle.pencolor('white')
         if Mutables.rainbow_mode:
-            self.turtle.fillcolor(color)
+            self.turtle.fillcolor(Mutables.color)
 
     def update(self, entities, scorekeeper):
         if not self.isRespawning:

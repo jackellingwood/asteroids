@@ -8,6 +8,7 @@ class Bullet(Entity):
     def __init__(self, x, y, radius, speed, angle):
         super().__init__(x, y, radius, speed, angle)
         self.turtle.shape('circle')
+        self.update_color_mode()
 
     def anti_wrap(self, entities):
         if self.x() > Constants.BOUND.value:
@@ -19,9 +20,9 @@ class Bullet(Entity):
         elif self.y() < -Constants.BOUND.value:
             self.kill(entities)
 
-    def update_color_mode(self, color):
+    def update_color_mode(self):
         if Mutables.rainbow_mode:
-            self.turtle.color(color)
+            self.turtle.color(Mutables.color)
         elif Mutables.dark_mode:
             self.turtle.color('white')
         else:

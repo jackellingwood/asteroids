@@ -7,7 +7,7 @@ class Asteroid(Entity):
     def __init__(self, x, y, radius, speed, angle):
         super().__init__(x, y, radius, speed, angle)
         self.turtle.shape('circle')
-        self.turtle.fillcolor('white')
+        self.update_color_mode()
 
     def split(self, entities, scorekeeper):
         scorekeeper.change_score(int(Constants.SCORE_NUMERATOR.value / self.get_radius()))
@@ -24,7 +24,7 @@ class Asteroid(Entity):
             entities.append(a)
         self.kill(entities)
 
-    def update_color_mode(self, color):
+    def update_color_mode(self):
         if Mutables.dark_mode:
             self.turtle.fillcolor('black')
             self.turtle.pencolor('white')
@@ -32,7 +32,7 @@ class Asteroid(Entity):
             self.turtle.fillcolor('white')
             self.turtle.pencolor('black')
         if Mutables.rainbow_mode:
-            self.turtle.pencolor(color)
+            self.turtle.pencolor(Mutables.color)
 
     def update(self, entities, scorekeeper):
         self.wrap()
